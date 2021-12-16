@@ -69,3 +69,34 @@ exports.readOne = async (req, res) => {
         
     }
 }
+
+exports.edit = async (req, res) => {
+    
+    const { id } = req.params
+    const{
+        domicilio,
+        telefono
+    }= req.body
+
+    try {
+        const updatedStore = await Store.findByIdAndUpdate(
+            id,
+            {
+                domicilio,
+                telefono
+            },
+            {new: true}
+        )
+        res.json({
+            msg: "Tienda actualizada con éxito",
+            data: updatedStore
+
+        })
+    
+    }catch(error){
+        res.status(500).json({
+            msg: "Hubo un error en la actualización de la guitarra",
+            error: error
+        })
+    }
+}
